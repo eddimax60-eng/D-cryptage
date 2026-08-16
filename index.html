@@ -1,340 +1,1196 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KAWAZ</title>
-  
-  <!-- Supabase JS CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+<title>KAWAZ Chat</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+    background:
+        radial-gradient(circle at top, #102c3a 0%, #0b0d18 40%, #05060a 100%);
+    color: white;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* ================= HEADER ================= */
+
+header {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(10,15,25,.75);
+    backdrop-filter: blur(15px);
+
+    border-bottom: 1px solid rgba(0,210,255,.15);
+
+    position: relative;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    color: #00d2ff;
+    text-shadow: 0 0 15px rgba(0,210,255,.5);
+}
+
+.secret-k {
+    background: none;
+    border: none;
+    color: #00d2ff;
+    font-size: inherit;
+    font-weight: inherit;
+    cursor: pointer;
+}
+
+/* ================= STATUS ================= */
+
+.status {
+    position: absolute;
+    right: 15px;
+
+    font-size: 11px;
+    color: #6b7280;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #555;
+}
+
+.status.online .status-dot {
+    background: #00ff88;
+    box-shadow: 0 0 10px #00ff88;
+}
+
+/* ================= CHAT ================= */
+
+#chat-container {
+    flex: 1;
+    overflow-y: auto;
+
+    padding: 20px 15px 100px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    scroll-behavior: smooth;
+}
+
+#chat-container::-webkit-scrollbar {
+    width: 5px;
+}
+
+#chat-container::-webkit-scrollbar-thumb {
+    background: #00d2ff;
+    border-radius: 20px;
+}
+
+/* ================= MESSAGE ================= */
+
+.message {
+    max-width: min(80%, 500px);
+
+    padding: 11px 14px;
+
+    background: rgba(255,255,255,.07);
+
+    border: 1px solid rgba(255,255,255,.08);
+
+    border-radius: 15px;
+
+    backdrop-filter: blur(10px);
+
+    animation: messageIn .2s ease;
+}
+
+@keyframes messageIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
     }
 
-    body {
-      background: #0f0c20;
-      color: #fff;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.message.mine {
+    align-self: flex-end;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,210,255,.20),
+            rgba(0,100,255,.12)
+        );
+
+    border-color: rgba(0,210,255,.25);
+}
+
+.author {
+    color: #00d2ff;
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.message-text {
+    font-size: 14px;
+    line-height: 1.45;
+    white-space: pre-wrap;
+}
+
+.time {
+    font-size: 9px;
+    color: #777;
+    margin-top: 6px;
+}
+
+/* ================= AUDIO ================= */
+
+.message audio {
+    width: 100%;
+    max-width: 280px;
+    margin-top: 6px;
+}
+
+/* ================= EMPTY ================= */
+
+.empty {
+    margin: auto;
+    text-align: center;
+    color: #666;
+}
+
+.empty strong {
+    color: #00d2ff;
+    font-size: 22px;
+}
+
+/* ================= INPUT ================= */
+
+.input-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+
+    padding: 12px;
+
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    background: rgba(5,7,12,.85);
+
+    backdrop-filter: blur(15px);
+
+    border-top: 1px solid rgba(255,255,255,.08);
+
+    z-index: 20;
+}
+
+.input-bar input {
+    flex: 1;
+
+    min-width: 0;
+
+    background: rgba(255,255,255,.08);
+
+    border: 1px solid rgba(255,255,255,.12);
+
+    color: white;
+
+    padding: 12px 15px;
+
+    border-radius: 25px;
+
+    outline: none;
+}
+
+.input-bar input:focus {
+    border-color: #00d2ff;
+}
+
+.btn {
+    border: none;
+
+    padding: 11px 16px;
+
+    border-radius: 25px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.btn:hover {
+    transform: scale(1.04);
+}
+
+.send {
+    background: #00d2ff;
+    color: #001018;
+}
+
+.voice {
+    background: #ff4757;
+    color: white;
+
+    width: 45px;
+    height: 45px;
+
+    padding: 0;
+}
+
+.voice.recording {
+    background: #ff1744;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    50% {
+        box-shadow: 0 0 0 8px rgba(255,23,68,.15);
+    }
+}
+
+/* ================= MODAL ================= */
+
+.modal {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,.75);
+
+    backdrop-filter: blur(8px);
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 100;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    width: 90%;
+    max-width: 400px;
+
+    padding: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(20,30,50,.97),
+            rgba(10,10,20,.97)
+        );
+
+    border: 1px solid rgba(0,210,255,.25);
+
+    border-radius: 20px;
+
+    box-shadow: 0 20px 60px rgba(0,0,0,.6);
+
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+
+    right: 18px;
+    top: 12px;
+
+    font-size: 25px;
+
+    color: #777;
+
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: white;
+}
+
+.modal-title {
+    text-align: center;
+
+    color: #00d2ff;
+
+    margin-bottom: 15px;
+}
+
+/* ================= MEMBERS ================= */
+
+.member-card {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 10px;
+
+    margin-top: 10px;
+
+    background: rgba(255,255,255,.05);
+
+    border-radius: 14px;
+}
+
+.member-card img {
+    width: 50px;
+    height: 50px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border: 2px solid #00d2ff;
+}
+
+.member-info h4 {
+    font-size: 14px;
+}
+
+.member-info p {
+    font-size: 11px;
+
+    color: #888;
+
+    margin-top: 3px;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:600px) {
+
+    .logo {
+        font-size: 21px;
     }
 
-    /* Header */
-    header {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      padding: 15px;
-      text-align: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      position: relative;
-    }
-
-    .title {
-      font-size: 24px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      color: #00d2ff;
-    }
-
-    /* Bouton K secrètement cliquable */
-    .secret-k {
-      background: none;
-      border: none;
-      color: inherit;
-      font: inherit;
-      cursor: pointer;
-      outline: none;
-    }
-
-    /* Zone des messages */
-    #chat-container {
-      flex: 1;
-      padding: 15px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+    .status {
+        display: none;
     }
 
     .message {
-      background: rgba(255, 255, 255, 0.07);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 10px 14px;
-      border-radius: 12px;
-      max-width: 80%;
-      word-break: break-word;
+        max-width: 88%;
     }
 
-    .message .author {
-      font-size: 11px;
-      color: #00d2ff;
-      margin-bottom: 4px;
-      font-weight: bold;
-    }
-
-    .message audio {
-      margin-top: 5px;
-      width: 100%;
-      max-width: 250px;
-      height: 36px;
-    }
-
-    /* Barre de saisie */
     .input-bar {
-      padding: 12px;
-      background: rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(10px);
-      display: flex;
-      gap: 8px;
-      align-items: center;
+        padding: 9px;
     }
 
-    .input-bar input {
-      flex: 1;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 10px 14px;
-      border-radius: 20px;
-      color: #fff;
-      outline: none;
+    .send {
+        font-size: 0;
+        width: 45px;
+        height: 45px;
+        padding: 0;
     }
 
-    .btn {
-      background: #00d2ff;
-      border: none;
-      color: #000;
-      font-weight: bold;
-      padding: 10px 16px;
-      border-radius: 20px;
-      cursor: pointer;
+    .send::after {
+        content: "➤";
+        font-size: 18px;
     }
-
-    .btn-vocal {
-      background: #ff4757;
-      color: #fff;
-    }
-
-    /* Pop-up Secrète Membres */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(5px);
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-    }
-
-    .modal-content {
-      background: rgba(25, 20, 45, 0.9);
-      border: 1px solid rgba(0, 210, 255, 0.3);
-      padding: 20px;
-      border-radius: 16px;
-      width: 85%;
-      max-width: 380px;
-      position: relative;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      font-size: 20px;
-      cursor: pointer;
-      color: #aaa;
-    }
-
-    .member-card {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-top: 12px;
-      padding: 8px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 10px;
-    }
-
-    .member-card img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 1.5px solid #00d2ff;
-    }
-
-    .member-info h4 {
-      font-size: 14px;
-    }
-
-    .member-info p {
-      font-size: 11px;
-      color: #aaa;
-    }
-  </style>
+}
+</style>
 </head>
+
 <body>
 
-  <!-- Header avec la lettre K secrètement cliquable -->
-  <header>
-    <div class="title">
-      <button class="secret-k" onclick="toggleSecretModal()">K</button>AWAZ
+<!-- ================= HEADER ================= -->
+
+<header>
+
+    <div class="logo">
+        <button
+            class="secret-k"
+            id="secret-k"
+            aria-label="Ouvrir les membres">
+            K
+        </button>AWAZ
     </div>
-  </header>
 
-  <!-- Zone d'affichage des messages -->
-  <div id="chat-container"></div>
+    <div class="status" id="status">
+        <span class="status-dot"></span>
+        <span id="status-text">Connexion...</span>
+    </div>
 
-  <!-- Barre d'envoi -->
-  <div class="input-bar">
-    <button class="btn btn-vocal" id="rec-btn" onclick="toggleRecord()">🎙️</button>
-    <input type="text" id="msg-input" placeholder="Écrire un message...">
-    <button class="btn" onclick="sendTextMessage()">Envoyer</button>
-  </div>
+</header>
 
-  <!-- Pop-up Secrète Membres -->
-  <div class="modal" id="secret-modal">
+
+<!-- ================= CHAT ================= -->
+
+<main id="chat-container">
+
+    <div class="empty" id="empty">
+        <strong>KAWAZ</strong>
+        <br>
+        Aucun message pour le moment.
+    </div>
+
+</main>
+
+
+<!-- ================= INPUT ================= -->
+
+<div class="input-bar">
+
+    <button
+        class="btn voice"
+        id="rec-btn"
+        aria-label="Enregistrer un vocal">
+        🎙️
+    </button>
+
+    <input
+        type="text"
+        id="msg-input"
+        placeholder="Écrire un message..."
+        maxlength="2000"
+        autocomplete="off"
+    >
+
+    <button
+        class="btn send"
+        id="send-btn">
+        Envoyer
+    </button>
+
+</div>
+
+
+<!-- ================= MODAL ================= -->
+
+<div class="modal" id="secret-modal">
+
     <div class="modal-content">
-      <span class="close-btn" onclick="toggleSecretModal()">&times;</span>
-      <h3 style="margin-bottom: 10px; color: #00d2ff; text-align: center;">Membres de la Team KAWAZ</h3>
-      
-      <!-- Liste des membres -->
-      <div class="member-card">
-        <img src="https://i.ibb.co/23FCZscg/IMG-9981.jpg" alt="Max">
-        <div class="member-info">
-          <h4>Max Eddi</h4>
-          <p>Fondateur / Lead Project</p>
-        </div>
-      </div>
 
-      <div class="member-card">
-        <img src="https://i.ibb.co/rKW7Z0vt/IMG-9824.jpg" alt="Christ">
-        <div class="member-info">
-          <h4>Christ</h4>
-          <p>Membre de la Team</p>
-        </div>
-      </div>
+        <span class="close-btn" id="close-modal">
+            ×
+        </span>
 
-      <div class="member-card">
-        <img src="https://i.ibb.co/V0vp2zBT/cc7eb9b4-4d8d-417e-9d7f-ba8ba7aba678.jpg" alt="Chams">
-        <div class="member-info">
-          <h4>Chams</h4>
-          <p>Membre de la Team</p>
+        <h3 class="modal-title">
+            Membres de la Team KAWAZ
+        </h3>
+
+        <div class="member-card">
+
+            <img
+                src="https://i.ibb.co/23FCZscg/IMG-9981.jpg"
+                alt="Max">
+
+            <div class="member-info">
+                <h4>Max Eddi</h4>
+                <p>Fondateur / Lead Project</p>
+            </div>
+
         </div>
-      </div>
+
+        <div class="member-card">
+
+            <img
+                src="https://i.ibb.co/rKW7Z0vt/IMG-9824.jpg"
+                alt="Christ">
+
+            <div class="member-info">
+                <h4>Christ</h4>
+                <p>Membre de la Team</p>
+            </div>
+
+        </div>
+
+        <div class="member-card">
+
+            <img
+                src="https://i.ibb.co/V0vp2zBT/cc7eb9b4-4d8d-417e-9d7f-ba8ba7aba678.jpg"
+                alt="Chams">
+
+            <div class="member-info">
+                <h4>Chams</h4>
+                <p>Membre de la Team</p>
+            </div>
+
+        </div>
+
     </div>
-  </div>
 
-  <script>
-    // Configuration Supabase
-    const SUPABASE_URL = 'https://tpnnrezecriolvmgu.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_n667t4HuOITrCXiO2cjeTA_QjrlM5uD';
-    
-    // Initialisation du client Supabase via la variable globale
-    const _supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+</div>
 
-    let mediaRecorder;
-    let audioChunks = [];
-    let isRecording = false;
 
-    // Chargement initial et écoute des messages en temps réel
-    window.onload = () => {
-      loadMessages();
-      _supabase.channel('public:messages')
-        .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, payload => {
-          renderMessage(payload.new);
-        })
-        .subscribe();
-    };
+<script>
 
-    // Afficher/Masquer la fenêtre secrète
-    function toggleSecretModal() {
-      const modal = document.getElementById('secret-modal');
-      modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
-    }
+/* =====================================================
+   CONFIGURATION SUPABASE
+===================================================== */
 
-    // Charger les messages depuis Supabase
-    async function loadMessages() {
-      const { data, error } = await _supabase
-        .from('messages')
-        .select('*')
-        .order('created_at', { ascending: true });
+const SUPABASE_URL =
+    "https://tpnnrezecriolvmgu.supabase.co";
 
-      if (!error && data) {
-        document.getElementById('chat-container').innerHTML = '';
-        data.forEach(renderMessage);
-      }
-    }
+const SUPABASE_KEY =
+    "COLLE_TA_CLE_PUBLISHABLE_ICI";
 
-    // Afficher un message à l'écran
-    function renderMessage(msg) {
-      const container = document.getElementById('chat-container');
-      const div = document.createElement('div');
-      div.className = 'message';
-      
-      let html = `<div class="author">${msg.author || 'Anonyme'}</div>`;
-      if (msg.content) html += `<div>${msg.content}</div>`;
-      if (msg.audio_url) html += `<audio controls src="${msg.audio_url}"></audio>`;
-      
-      div.innerHTML = html;
-      container.appendChild(div);
-      container.scrollTop = container.scrollHeight;
-    }
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
-    // Envoi de message texte
-    async function sendTextMessage() {
-      const input = document.getElementById('msg-input');
-      const text = input.value.trim();
-      if (!text) return;
 
-      input.value = '';
-      await _supabase.from('messages').insert([{ author: 'Max', content: text }]);
-    }
+/* =====================================================
+   VARIABLES
+===================================================== */
 
-    // Enregistrement vocal
-    async function toggleRecord() {
-      const recBtn = document.getElementById('rec-btn');
-      
-      if (!isRecording) {
-        try {
-          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-          mediaRecorder = new MediaRecorder(stream);
-          audioChunks = [];
+let mediaRecorder = null;
 
-          mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
-          mediaRecorder.onstop = async () => {
-            const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-            const fileName = `vocal_${Date.now()}.webm`;
+let audioChunks = [];
 
-            const { error: uploadErr } = await _supabase.storage.from('vocaux').upload(fileName, audioBlob);
-            if (uploadErr) return alert('Erreur d\'envoi vocal');
+let isRecording = false;
 
-            const { data: urlData } = _supabase.storage.from('vocaux').getPublicUrl(fileName);
-            await _supabase.from('messages').insert([{ author: 'Max', audio_url: urlData.publicUrl }]);
-          };
+const AUTHOR = "Max";
 
-          mediaRecorder.start();
-          isRecording = true;
-          recBtn.innerText = '⏹️';
-        } catch (err) {
-          alert('Accès au micro refusé ou indisponible');
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const chat =
+    document.getElementById("chat-container");
+
+const input =
+    document.getElementById("msg-input");
+
+const sendBtn =
+    document.getElementById("send-btn");
+
+const recBtn =
+    document.getElementById("rec-btn");
+
+const status =
+    document.getElementById("status");
+
+const statusText =
+    document.getElementById("status-text");
+
+const empty =
+    document.getElementById("empty");
+
+const modal =
+    document.getElementById("secret-modal");
+
+
+/* =====================================================
+   UTILITAIRE : ÉCHAPPER LE TEXTE
+===================================================== */
+
+function escapeHTML(text) {
+
+    const div = document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
+}
+
+
+/* =====================================================
+   FORMAT DATE
+===================================================== */
+
+function formatTime(date) {
+
+    if (!date) return "";
+
+    return new Date(date).toLocaleTimeString(
+        "fr-FR",
+        {
+            hour: "2-digit",
+            minute: "2-digit"
         }
-      } else {
-        mediaRecorder.stop();
-        isRecording = false;
-        recBtn.innerText = '🎙️';
-      }
+    );
+}
+
+
+/* =====================================================
+   AFFICHAGE MESSAGE
+===================================================== */
+
+function renderMessage(msg) {
+
+    /*
+      Évite les doublons
+    */
+
+    if (document.querySelector(
+        `[data-message-id="${msg.id}"]`
+    )) {
+        return;
     }
-  </script>
+
+    if (empty) {
+        empty.style.display = "none";
+    }
+
+    const div =
+        document.createElement("div");
+
+    div.className = "message";
+
+    div.dataset.messageId = msg.id;
+
+    if (msg.author === AUTHOR) {
+        div.classList.add("mine");
+    }
+
+
+    const author =
+        document.createElement("div");
+
+    author.className = "author";
+
+    author.textContent =
+        msg.author || "Anonyme";
+
+
+    div.appendChild(author);
+
+
+    if (msg.content) {
+
+        const text =
+            document.createElement("div");
+
+        text.className = "message-text";
+
+        text.textContent = msg.content;
+
+        div.appendChild(text);
+    }
+
+
+    if (msg.audio_url) {
+
+        const audio =
+            document.createElement("audio");
+
+        audio.controls = true;
+
+        audio.preload = "metadata";
+
+        audio.src = msg.audio_url;
+
+        div.appendChild(audio);
+    }
+
+
+    if (msg.created_at) {
+
+        const time =
+            document.createElement("div");
+
+        time.className = "time";
+
+        time.textContent =
+            formatTime(msg.created_at);
+
+        div.appendChild(time);
+    }
+
+
+    chat.appendChild(div);
+
+    chat.scrollTop =
+        chat.scrollHeight;
+}
+
+
+/* =====================================================
+   CHARGEMENT DES MESSAGES
+===================================================== */
+
+async function loadMessages() {
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("messages")
+        .select("*")
+        .order(
+            "created_at",
+            {
+                ascending: true
+            }
+        );
+
+
+    if (error) {
+
+        console.error(
+            "Erreur chargement :",
+            error
+        );
+
+        statusText.textContent =
+            "Erreur";
+
+        return;
+    }
+
+
+    chat.innerHTML = "";
+
+    data.forEach(renderMessage);
+
+
+    if (data.length === 0) {
+
+        chat.appendChild(empty);
+
+        empty.style.display = "block";
+    }
+}
+
+
+/* =====================================================
+   ENVOYER MESSAGE
+===================================================== */
+
+async function sendTextMessage() {
+
+    const text =
+        input.value.trim();
+
+    if (!text) return;
+
+
+    sendBtn.disabled = true;
+
+
+    const {
+        error
+    } = await supabaseClient
+        .from("messages")
+        .insert([
+            {
+                author: AUTHOR,
+                content: text
+            }
+        ]);
+
+
+    sendBtn.disabled = false;
+
+
+    if (error) {
+
+        console.error(error);
+
+        alert(
+            "Impossible d'envoyer le message :\n" +
+            error.message
+        );
+
+        return;
+    }
+
+
+    input.value = "";
+
+    input.focus();
+}
+
+
+/* =====================================================
+   ENTRÉE CLAVIER
+===================================================== */
+
+input.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Enter" &&
+            !event.shiftKey
+        ) {
+
+            event.preventDefault();
+
+            sendTextMessage();
+        }
+
+    }
+);
+
+
+/* =====================================================
+   ENREGISTREMENT VOCAL
+===================================================== */
+
+async function toggleRecord() {
+
+    if (isRecording) {
+
+        mediaRecorder.stop();
+
+        isRecording = false;
+
+        recBtn.classList.remove(
+            "recording"
+        );
+
+        recBtn.textContent = "🎙️";
+
+        return;
+    }
+
+
+    try {
+
+        const stream =
+            await navigator.mediaDevices
+                .getUserMedia({
+                    audio: true
+                });
+
+
+        let mimeType =
+            "audio/webm";
+
+
+        if (
+            !MediaRecorder
+                .isTypeSupported("audio/webm")
+        ) {
+
+            mimeType =
+                "audio/mp4";
+        }
+
+
+        mediaRecorder =
+            new MediaRecorder(
+                stream,
+                {
+                    mimeType
+                }
+            );
+
+
+        audioChunks = [];
+
+
+        mediaRecorder.ondataavailable =
+            function(event) {
+
+                if (event.data.size > 0) {
+
+                    audioChunks.push(
+                        event.data
+                    );
+                }
+            };
+
+
+        mediaRecorder.onstop =
+            async function() {
+
+                stream
+                    .getTracks()
+                    .forEach(
+                        track =>
+                            track.stop()
+                    );
+
+
+                const blob =
+                    new Blob(
+                        audioChunks,
+                        {
+                            type: mimeType
+                        }
+                    );
+
+
+                const extension =
+                    mimeType.includes("mp4")
+                        ? "mp4"
+                        : "webm";
+
+
+                const fileName =
+                    `vocal_${Date.now()}.${extension}`;
+
+
+                const {
+                    error:
+                    uploadError
+                } =
+                    await supabaseClient
+                        .storage
+                        .from("vocaux")
+                        .upload(
+                            fileName,
+                            blob,
+                            {
+                                contentType:
+                                    mimeType,
+                                upsert: false
+                            }
+                        );
+
+
+                if (uploadError) {
+
+                    console.error(
+                        uploadError
+                    );
+
+                    alert(
+                        "Erreur lors de l'envoi du vocal :\n" +
+                        uploadError.message
+                    );
+
+                    return;
+                }
+
+
+                const {
+                    data:
+                    urlData
+                } =
+                    supabaseClient
+                        .storage
+                        .from("vocaux")
+                        .getPublicUrl(
+                            fileName
+                        );
+
+
+                const {
+                    error:
+                    messageError
+                } =
+                    await supabaseClient
+                        .from("messages")
+                        .insert([
+                            {
+                                author:
+                                    AUTHOR,
+
+                                audio_url:
+                                    urlData.publicUrl
+                            }
+                        ]);
+
+
+                if (messageError) {
+
+                    console.error(
+                        messageError
+                    );
+
+                    alert(
+                        "Le vocal a été envoyé mais le message n'a pas pu être enregistré."
+                    );
+                }
+
+            };
+
+
+        mediaRecorder.start();
+
+        isRecording = true;
+
+        recBtn.classList.add(
+            "recording"
+        );
+
+        recBtn.textContent = "⏹️";
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Impossible d'accéder au microphone.\n\n" +
+            "Vérifie les permissions de ton navigateur."
+        );
+    }
+}
+
+
+/* =====================================================
+   TEMPS RÉEL SUPABASE
+===================================================== */
+
+function subscribeToMessages() {
+
+    supabaseClient
+        .channel("kawaz-messages")
+
+        .on(
+            "postgres_changes",
+            {
+                event: "INSERT",
+                schema: "public",
+                table: "messages"
+            },
+
+            function(payload) {
+
+                renderMessage(
+                    payload.new
+                );
+            }
+        )
+
+        .subscribe(
+            function(statusValue) {
+
+                console.log(
+                    "Supabase :",
+                    statusValue
+                );
+
+
+                if (
+                    statusValue ===
+                    "SUBSCRIBED"
+                ) {
+
+                    status.classList.add(
+                        "online"
+                    );
+
+                    statusText.textContent =
+                        "En ligne";
+
+                } else {
+
+                    status.classList.remove(
+                        "online"
+                    );
+
+                    statusText.textContent =
+                        "Connexion...";
+                }
+
+            }
+        );
+}
+
+
+/* =====================================================
+   MODAL SECRET
+===================================================== */
+
+document
+    .getElementById("secret-k")
+    .addEventListener(
+        "click",
+        function() {
+
+            modal.classList.add(
+                "active"
+            );
+
+        }
+    );
+
+
+document
+    .getElementById("close-modal")
+    .addEventListener(
+        "click",
+        function() {
+
+            modal.classList.remove(
+                "active"
+            );
+
+        }
+    );
+
+
+modal.addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            event.target === modal
+        ) {
+
+            modal.classList.remove(
+                "active"
+            );
+        }
+    }
+);
+
+
+/* =====================================================
+   INITIALISATION
+===================================================== */
+
+async function init() {
+
+    await loadMessages();
+
+    subscribeToMessages();
+
+    input.focus();
+}
+
+
+sendBtn.addEventListener(
+    "click",
+    sendTextMessage
+);
+
+
+recBtn.addEventListener(
+    "click",
+    toggleRecord
+);
+
+
+init();
+
+</script>
+
 </body>
 </html>

@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Max & Team | Portfolio & Assistant IA</title>
+    <title>Max, Christ & Chams | Site Officiel & IA</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome -->
+    <!-- FontAwesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,7 +31,6 @@
                             accent: '#a855f7',
                             cyan: '#06b6d4',
                             dark: '#0b0f19',
-                            card: 'rgba(17, 24, 39, 0.7)',
                         }
                     },
                     animation: {
@@ -66,17 +65,16 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
         .glass-glow {
-            background: rgba(17, 25, 40, 0.75);
+            background: rgba(17, 25, 40, 0.8);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(99, 102, 241, 0.25);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.3);
         }
         .text-gradient {
             background: linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #22d3ee 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        /* Custom scrollbar for AI chat */
         .chat-scroll::-webkit-scrollbar {
             width: 5px;
         }
@@ -89,6 +87,14 @@
         }
         .chat-scroll::-webkit-scrollbar-thumb:hover {
             background: rgba(99, 102, 241, 0.7);
+        }
+        .typewriter-cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
     </style>
 </head>
@@ -111,154 +117,158 @@
             <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
                 <a href="#about" class="hover:text-brand-400 transition-colors">À Propos</a>
                 <a href="#team" class="hover:text-brand-400 transition-colors">La Team</a>
-                <a href="#projects" class="hover:text-brand-400 transition-colors">Projets</a>
-                <a href="#ai-section" class="hover:text-brand-400 transition-colors flex items-center gap-2 text-brand-400 font-semibold bg-brand-500/10 px-3 py-1.5 rounded-full border border-brand-500/20">
-                    <i class="fa-solid fa-sparkles text-xs animate-pulse"></i> Assistant IA
-                </a>
+                <a href="#gallery" class="hover:text-brand-400 transition-colors">Photos &amp; Projets</a>
             </div>
 
-            <button onclick="toggleAiChat()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-brand-600 to-brand-accent hover:from-brand-500 hover:to-purple-500 text-white font-semibold text-sm shadow-lg shadow-brand-500/25 transition-all hover:scale-105 flex items-center gap-2">
-                <i class="fa-solid fa-robot"></i>
-                <span>Discuter avec l'IA</span>
-            </button>
+            <div class="flex items-center gap-3">
+                <button onclick="toggleAiChat()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-brand-600 to-brand-accent hover:from-brand-500 hover:to-purple-500 text-white font-semibold text-sm shadow-lg shadow-brand-500/25 transition-all hover:scale-105 flex items-center gap-2">
+                    <i class="fa-solid fa-sparkles animate-pulse"></i>
+                    <span>Assistant IA</span>
+                </button>
+            </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section Originale avec Animation Typewriter -->
     <section class="pt-36 pb-20 px-6 max-w-7xl mx-auto text-center relative">
         <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-brand-500/30 text-brand-400 text-sm font-medium mb-8 animate-float">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-            <span>Portfolio Officiel &bull; Propulsé par Gemini AI</span>
+            <span>Site Officiel de Max, Christ &amp; Chams</span>
         </div>
 
         <h1 class="text-5xl md:text-7xl font-extrabold font-heading tracking-tight mb-6 leading-tight">
-            Créativité, Code &amp; <br>
-            <span class="text-gradient">Intelligence Artificielle</span>
+            Bienvenue chez <br>
+            <span id="typewriter" class="text-gradient typewriter-cursor"></span>
         </h1>
 
-        <p class="max-w-2xl mx-auto text-gray-400 text-lg md:text-xl mb-10 leading-relaxed">
-            Bienvenue sur l'espace officiel de <strong class="text-white">Max</strong>, <strong class="text-white">Christ</strong> et <strong class="text-white">Chams</strong>. Explorez nos réalisations et posez directement vos questions à notre assistant IA intégré !
+        <p class="max-w-2xl mx-auto text-gray-300 text-lg md:text-xl mb-10 leading-relaxed">
+            Créativité, programmation, projets d'équipe et innovation. Retrouvez tout notre univers, nos visuels interactifs et notre intelligence artificielle dédiée !
         </p>
 
         <div class="flex flex-wrap justify-center gap-4">
-            <button onclick="toggleAiChat()" class="px-8 py-4 rounded-2xl bg-gradient-to-r from-brand-600 via-brand-accent to-brand-cyan hover:opacity-90 text-white font-bold text-lg shadow-xl shadow-brand-500/30 transition-all hover:scale-105 flex items-center gap-3">
-                <i class="fa-solid fa-comments text-xl"></i>
-                <span>Tester l'Assistant IA</span>
-            </button>
-            <a href="#team" class="px-8 py-4 rounded-2xl glass hover:bg-white/10 text-white font-bold text-lg transition-all hover:scale-105 flex items-center gap-3">
-                <i class="fa-solid fa-users text-brand-400"></i>
-                <span>Découvrir la Team</span>
+            <a href="#team" class="px-8 py-4 rounded-2xl bg-gradient-to-r from-brand-600 via-brand-accent to-brand-cyan hover:opacity-90 text-white font-bold text-lg shadow-xl shadow-brand-500/30 transition-all hover:scale-105 flex items-center gap-3">
+                <i class="fa-solid fa-users"></i>
+                <span>Découvrir l'Équipe</span>
             </a>
+            <button onclick="toggleAiChat()" class="px-8 py-4 rounded-2xl glass hover:bg-white/10 text-white font-bold text-lg transition-all hover:scale-105 flex items-center gap-3 border border-brand-500/30">
+                <i class="fa-solid fa-robot text-brand-400"></i>
+                <span>Parler à l'IA Gemini</span>
+            </button>
         </div>
     </section>
 
-    <!-- Section Team -->
+    <!-- Section Team avec Présentation Complète & Cartes Détaillées -->
     <section id="team" class="py-20 px-6 max-w-7xl mx-auto">
         <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-5xl font-bold font-heading mb-4">Les Frérots de la Team</h2>
-            <p class="text-gray-400 max-w-xl mx-auto">Trois passionnés réunis pour concevoir des expériences web uniques et intelligentes.</p>
+            <h2 class="text-3xl md:text-5xl font-bold font-heading mb-4">La Team Au Complet</h2>
+            <p class="text-gray-400 max-w-xl mx-auto">Trois profils passionnés et complémentaires travaillant en parfaite synergie.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Max -->
             <div class="glass rounded-3xl p-8 relative overflow-hidden group hover:border-brand-500/50 transition-all duration-300 hover:-translate-y-2">
-                <div class="w-24 h-24 rounded-2xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center text-3xl text-white font-bold mb-6 mx-auto shadow-xl shadow-brand-500/20 group-hover:scale-110 transition-transform">
-                    M
+                <div class="relative w-32 h-32 mx-auto mb-6">
+                    <div class="w-full h-full rounded-2xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center text-4xl text-white font-bold shadow-xl shadow-brand-500/30 group-hover:scale-105 transition-transform overflow-hidden">
+                        <!-- Photo placeholder avec avatar stylisé -->
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" alt="Max" class="w-full h-full object-cover">
+                    </div>
+                    <span class="absolute -bottom-2 -right-2 bg-brand-500 text-white p-2 rounded-xl text-xs font-bold shadow-lg">Lead</span>
                 </div>
                 <h3 class="text-2xl font-bold font-heading text-center mb-1">Max</h3>
-                <p class="text-brand-400 text-center text-sm font-semibold mb-4">Lead Developer &amp; Creator</p>
-                <p class="text-gray-400 text-center text-sm mb-6 leading-relaxed">
-                    Passionné par les interfaces modernes, l'architecture web et l'intégration d'intelligences artificielles.
+                <p class="text-brand-400 text-center text-sm font-semibold mb-4">Lead Developer &amp; Architecte Web</p>
+                <p class="text-gray-300 text-center text-sm mb-6 leading-relaxed">
+                    Créateur principal du projet. Spécialiste frontend, logique interactive et intégration de modèles d'IA avancés.
                 </p>
-                <div class="flex justify-center gap-3 text-gray-400">
-                    <span class="px-3 py-1 rounded-full text-xs glass border border-white/10">Code</span>
-                    <span class="px-3 py-1 rounded-full text-xs glass border border-white/10">IA</span>
-                    <span class="px-3 py-1 rounded-full text-xs glass border border-white/10">Design</span>
+                <div class="flex flex-wrap justify-center gap-2 text-xs">
+                    <span class="px-3 py-1 rounded-full glass border border-brand-500/30 text-brand-300">Development</span>
+                    <span class="px-3 py-1 rounded-full glass border border-brand-500/30 text-brand-300">Gemini AI</span>
+                    <span class="px-3 py-1 rounded-full glass border border-brand-500/30 text-brand-300">UI Architecture</span>
                 </div>
             </div>
 
             <!-- Christ -->
             <div class="glass rounded-3xl p-8 relative overflow-hidden group hover:border-purple-500/50 transition-all duration-300 hover:-translate-y-2">
-                <div class="w-24 h-24 rounded-2xl bg-gradient-to-tr from-purple-600 to-pink-500 flex items-center justify-center text-3xl text-white font-bold mb-6 mx-auto shadow-xl shadow-purple-500/20 group-hover:scale-110 transition-transform">
-                    C
+                <div class="relative w-32 h-32 mx-auto mb-6">
+                    <div class="w-full h-full rounded-2xl bg-gradient-to-tr from-purple-600 to-pink-500 flex items-center justify-center text-4xl text-white font-bold shadow-xl shadow-purple-500/30 group-hover:scale-105 transition-transform overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80" alt="Christ" class="w-full h-full object-cover">
+                    </div>
+                    <span class="absolute -bottom-2 -right-2 bg-purple-500 text-white p-2 rounded-xl text-xs font-bold shadow-lg">Tech</span>
                 </div>
                 <h3 class="text-2xl font-bold font-heading text-center mb-1">Christ</h3>
-                <p class="text-purple-400 text-center text-sm font-semibold mb-4">Tech &amp; Strategy</p>
-                <p class="text-gray-400 text-center text-sm mb-6 leading-relaxed">
-                    Expert en optimisation, gestion de projets digitaux et toujours prêt à repousser les limites de la tech.
+                <p class="text-purple-400 text-center text-sm font-semibold mb-4">Backend &amp; Stratégie Tech</p>
+                <p class="text-gray-300 text-center text-sm mb-6 leading-relaxed">
+                    Responsable des structures techniques, de l'optimisation des flux et de la vision stratégique à long terme.
                 </p>
-                <div class="flex justify-center gap-3 text-gray-400">
-                    <span class="px-3 py-1 rounded-full text-xs glass border border-white/10">Stratégie</span>
-                    <span class="px-3 py-1 rounded-full text-xs glass border border-white/10">Backend</span>
-                    <span class="px-3 py-1 rounded-full text-xs glass border border-white/10">Data</span>
+                <div class="flex flex-wrap justify-center gap-2 text-xs">
+                    <span class="px-3 py-1 rounded-full glass border border-purple-500/30 text-purple-300">Backend</span>
+                    <span class="px-3 py-1 rounded-full glass border border-purple-500/30 text-purple-300">Optimisation</span>
+                    <span class="px-3 py-1 rounded-full glass border border-purple-500/30 text-purple-300">Stratégie</span>
                 </div>
             </div>
 
             <!-- Chams -->
             <div class="glass rounded-3xl p-8 relative overflow-hidden group hover:border-cyan-500/50 transition-all duration-300 hover:-translate-y-2">
-                <div class="w-24 h-24 rounded-2xl bg-gradient-to-tr from-cyan-600 to-teal-400 flex items-center justify-center text-3xl text-white font-bold mb-6 mx-auto shadow-xl shadow-cyan-500/20 group-hover:scale-110 transition-transform">
-                    C
+                <div class="relative w-32 h-32 mx-auto mb-6">
+                    <div class="w-full h-full rounded-2xl bg-gradient-to-tr from-cyan-600 to-teal-400 flex items-center justify-center text-4xl text-white font-bold shadow-xl shadow-cyan-500/30 group-hover:scale-105 transition-transform overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80" alt="Chams" class="w-full h-full object-cover">
+                    </div>
+                    <span class="absolute -bottom-2 -right-2 bg-cyan-500 text-white p-2 rounded-xl text-xs font-bold shadow-lg">Design</span>
                 </div>
                 <h3 class="text-2xl font-bold font-heading text-center mb-1">Chams</h3>
-                <p class="text-cyan-400 text-center text-sm font-semibold mb-4">Creative &amp; UX Master</p>
-                <p class="text-gray-400 text-center text-sm mb-6 leading-relaxed">
-                    Spécialiste de l'expérience utilisateur, du branding visuel et du rendu esthétique futuriste.
+                <p class="text-cyan-400 text-center text-sm font-semibold mb-4">UX/UI Designer &amp; Creative Lead</p>
+                <p class="text-gray-300 text-center text-sm mb-6 leading-relaxed">
+                    Spécialiste du rendu visuel, du design moderne Glassmorphism et des animations pour une expérience fluide.
                 </p>
-                <div class="flex justify-center gap-3 text-gray-400">
-                    <span class="px-3 py-1 rounded-full text-xs glass border border-white/10">UI/UX</span>
-                    <span class="px-3 py-1 rounded-full text-xs glass border border-white/10">Motion</span>
-                    <span class="px-3 py-1 rounded-full text-xs glass border border-white/10">Branding</span>
+                <div class="flex flex-wrap justify-center gap-2 text-xs">
+                    <span class="px-3 py-1 rounded-full glass border border-cyan-500/30 text-cyan-300">UX / UI</span>
+                    <span class="px-3 py-1 rounded-full glass border border-cyan-500/30 text-cyan-300">Animation</span>
+                    <span class="px-3 py-1 rounded-full glass border border-cyan-500/30 text-cyan-300">Design System</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- AI Feature Showcase Section -->
-    <section id="ai-section" class="py-20 px-6 max-w-7xl mx-auto">
-        <div class="glass-glow rounded-3xl p-8 md:p-12 relative overflow-hidden border border-brand-500/30">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                <div>
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/20 text-brand-400 text-xs font-semibold mb-4">
-                        <i class="fa-solid fa-brain"></i> CHATBOT ASSISTANT
-                    </div>
-                    <h2 class="text-3xl md:text-4xl font-bold font-heading mb-4">Un Assistant IA à ton service 24/7</h2>
-                    <p class="text-gray-300 mb-6 leading-relaxed">
-                        L'intelligence artificielle est intégrée directement sur ton site. Tes visiteurs peuvent lui poser des questions sur votre équipe, vos projets ou obtenir une assistance instantanée.
-                    </p>
-                    <ul class="space-y-3 text-gray-300 text-sm mb-8">
-                        <li class="flex items-center gap-3">
-                            <i class="fa-solid fa-circle-check text-brand-400"></i> Réponses instantanées sur Max, Christ et Chams
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fa-solid fa-circle-check text-brand-400"></i> Mode interactif rapide ou clé Gemini personnalisée
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fa-solid fa-circle-check text-brand-400"></i> Design fluide Dark Glassmorphic mobile-friendly
-                        </li>
-                    </ul>
-                    <button onclick="toggleAiChat()" class="px-6 py-3 rounded-xl bg-gradient-to-r from-brand-600 to-brand-accent text-white font-semibold text-sm shadow-lg hover:opacity-90 transition-all flex items-center gap-2">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i> Lancer la discussion
-                    </button>
+    <!-- Galerie & Projets Interactifs Restaurés -->
+    <section id="gallery" class="py-20 px-6 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-5xl font-bold font-heading mb-4">Galerie &amp; Réalisations</h2>
+            <p class="text-gray-400 max-w-xl mx-auto">Explorez nos créations graphiques et nos interactions personnalisées.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Card photo 1 -->
+            <div class="glass rounded-2xl overflow-hidden group hover:scale-[1.02] transition-all duration-300">
+                <div class="h-56 overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80" alt="Collaboration" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
                 </div>
-                <div class="relative">
-                    <div class="glass rounded-2xl p-6 border border-white/10 shadow-2xl relative z-10">
-                        <div class="flex items-center gap-3 pb-4 border-b border-white/10 mb-4">
-                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                            <span class="text-xs text-gray-400 ml-2 font-mono">Gemini AI Assistant v2.5</span>
-                        </div>
-                        <div class="space-y-3 text-sm">
-                            <div class="bg-brand-600/30 p-3 rounded-xl border border-brand-500/20 max-w-[85%]">
-                                <span class="text-brand-300 font-bold text-xs block mb-1">Visiteur</span>
-                                Qui fait partie de l'équipe Max ?
-                            </div>
-                            <div class="bg-white/5 p-3 rounded-xl border border-white/10 max-w-[90%] ml-auto text-gray-200">
-                                <span class="text-purple-400 font-bold text-xs block mb-1">Assistant IA</span>
-                                L'équipe est composée du trio : <strong>Max</strong> (Lead Dev), <strong>Christ</strong> (Tech &amp; Stratégie) et <strong>Chams</strong> (Design UI/UX) ! 🚀
-                            </div>
-                        </div>
-                    </div>
+                <div class="p-6">
+                    <h4 class="text-xl font-bold font-heading mb-2">Sessions de Code &amp; Creative</h4>
+                    <p class="text-gray-400 text-sm">Développement d'expériences interactives et intégration de technologies modernes.</p>
+                </div>
+            </div>
+
+            <!-- Card photo 2 -->
+            <div class="glass rounded-2xl overflow-hidden group hover:scale-[1.02] transition-all duration-300">
+                <div class="h-56 overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="Team Spirit" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+                </div>
+                <div class="p-6">
+                    <h4 class="text-xl font-bold font-heading mb-2">Esprit d'Équipe &amp; Synergie</h4>
+                    <p class="text-gray-400 text-sm">Combinaison de compétences entre Max, Christ et Chams pour pousser chaque projet plus loin.</p>
+                </div>
+            </div>
+
+            <!-- Card photo 3 -->
+            <div class="glass rounded-2xl overflow-hidden group hover:scale-[1.02] transition-all duration-300">
+                <div class="h-56 overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80" alt="AI & Future" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+                </div>
+                <div class="p-6">
+                    <h4 class="text-xl font-bold font-heading mb-2">Intégration d'IA Générative</h4>
+                    <p class="text-gray-400 text-sm">Déploiement du modèle Gemini 2.5 Flash directement sur le web pour des échanges dynamiques.</p>
                 </div>
             </div>
         </div>
@@ -266,52 +276,43 @@
 
     <!-- Footer -->
     <footer class="py-12 border-t border-white/10 text-center text-gray-500 text-sm">
-        <p>&copy; 2026 Max, Christ &amp; Chams. Créé avec passion &amp; Intelligence Artificielle.</p>
+        <p>&copy; 2026 Max, Christ &amp; Chams. Tous droits réservés.</p>
     </footer>
 
-    <!-- ========================================== -->
-    <!-- FLOATING AI CHAT WIDGET (INTÉGRATION IA)   -->
-    <!-- ========================================== -->
+    <!-- ======================================================== -->
+    <!-- WIDGET IA NOUVELLE GÉNÉRATION (SUPER PERFORMANT & FLUIDE) -->
+    <!-- ======================================================== -->
 
     <!-- Floating Trigger Button -->
     <div class="fixed bottom-6 right-6 z-50">
         <button id="ai-widget-btn" onclick="toggleAiChat()" class="relative group flex items-center gap-3 p-4 rounded-2xl bg-gradient-to-r from-brand-600 via-brand-accent to-purple-600 text-white shadow-2xl shadow-brand-500/50 hover:scale-105 transition-all duration-300 animate-glow">
             <div class="relative">
-                <i class="fa-solid fa-robot text-2xl"></i>
+                <i class="fa-solid fa-sparkles text-2xl"></i>
                 <span class="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full border-2 border-slate-900 animate-ping"></span>
             </div>
-            <span class="hidden md:inline font-bold text-sm tracking-wide pr-1">Assistant IA Max</span>
-            <span class="absolute -top-10 right-0 bg-brand-600 text-white text-[11px] font-semibold px-3 py-1 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                Pose-moi une question ! ✨
-            </span>
+            <span class="hidden md:inline font-bold text-sm tracking-wide pr-1">Assistant IA</span>
         </button>
     </div>
 
     <!-- AI Chat Window Container -->
-    <div id="ai-chat-drawer" class="fixed bottom-24 right-6 w-[92vw] sm:w-[420px] h-[580px] max-h-[80vh] z-50 rounded-3xl glass-glow border border-brand-500/40 shadow-2xl flex flex-col overflow-hidden transition-all duration-300 transform translate-y-12 opacity-0 pointer-events-none">
+    <div id="ai-chat-drawer" class="fixed bottom-24 right-6 w-[92vw] sm:w-[440px] h-[600px] max-h-[82vh] z-50 rounded-3xl glass-glow border border-brand-500/40 shadow-2xl flex flex-col overflow-hidden transition-all duration-300 transform translate-y-12 opacity-0 pointer-events-none">
         
-        <!-- Drawer Header -->
-        <div class="p-4 bg-gradient-to-r from-brand-600/40 via-purple-600/40 to-slate-900 border-b border-white/10 flex justify-between items-center backdrop-blur-xl">
+        <!-- Header -->
+        <div class="p-4 bg-gradient-to-r from-slate-900 via-brand-600/40 to-slate-900 border-b border-white/10 flex justify-between items-center backdrop-blur-xl">
             <div class="flex items-center gap-3">
-                <div class="relative">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-500 to-brand-accent flex items-center justify-center text-white text-lg shadow-md">
-                        <i class="fa-solid fa-sparkles"></i>
-                    </div>
-                    <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-400 rounded-full border-2 border-slate-900"></span>
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-500 to-brand-accent flex items-center justify-center text-white text-lg shadow-md">
+                    <i class="fa-solid fa-robot"></i>
                 </div>
                 <div>
                     <h4 class="font-heading font-bold text-sm text-white flex items-center gap-2">
-                        Max IA <span class="text-[10px] bg-brand-500/30 text-brand-300 px-2 py-0.5 rounded-full border border-brand-500/30">Gemini</span>
+                        Max Gemini IA <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-500/30">Ultra-Rapide</span>
                     </h4>
-                    <p class="text-[11px] text-gray-300 flex items-center gap-1">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                        En ligne &bull; Équipe Max, Christ &amp; Chams
-                    </p>
+                    <p class="text-[11px] text-gray-300">Réponses instantanées sur l'équipe &amp; le web</p>
                 </div>
             </div>
 
             <div class="flex items-center gap-2">
-                <button onclick="toggleApiKeyModal()" title="Clé API Gemini" class="w-8 h-8 rounded-lg glass hover:bg-white/10 text-gray-300 flex items-center justify-center text-xs transition-colors">
+                <button onclick="toggleApiKeyModal()" title="Configurer Clé API Gemini" class="w-8 h-8 rounded-lg glass hover:bg-white/10 text-gray-300 flex items-center justify-center text-xs transition-colors">
                     <i class="fa-solid fa-key"></i>
                 </button>
                 <button onclick="toggleAiChat()" class="w-8 h-8 rounded-lg glass hover:bg-white/10 text-gray-300 flex items-center justify-center text-xs transition-colors">
@@ -320,51 +321,50 @@
             </div>
         </div>
 
-        <!-- Quick Suggestions -->
-        <div class="p-3 border-b border-white/5 bg-slate-950/40 flex gap-2 overflow-x-auto text-xs scrollbar-none">
-            <button onclick="sendQuickPrompt('Qui sont Max, Christ et Chams ?')" class="px-3 py-1.5 rounded-full glass hover:bg-brand-500/20 text-gray-300 whitespace-nowrap transition-colors border border-white/10">
-                👥 L'équipe
+        <!-- Quick Prompts -->
+        <div class="p-3 border-b border-white/5 bg-slate-950/40 flex gap-2 overflow-x-auto text-xs chat-scroll">
+            <button onclick="sendQuickPrompt('Présente-moi l\'équipe de Max !')" class="px-3 py-1.5 rounded-full glass hover:bg-brand-500/20 text-gray-200 whitespace-nowrap transition-colors border border-white/10">
+                👥 Présentation Team
             </button>
-            <button onclick="sendQuickPrompt('Que fait cette IA ?')" class="px-3 py-1.5 rounded-full glass hover:bg-brand-500/20 text-gray-300 whitespace-nowrap transition-colors border border-white/10">
-                ⚡ Capacités
+            <button onclick="sendQuickPrompt('Que font Max, Christ et Chams ?')" class="px-3 py-1.5 rounded-full glass hover:bg-brand-500/20 text-gray-200 whitespace-nowrap transition-colors border border-white/10">
+                ⚡ Rôles de chacun
             </button>
-            <button onclick="sendQuickPrompt('Comment contacter Max ?')" class="px-3 py-1.5 rounded-full glass hover:bg-brand-500/20 text-gray-300 whitespace-nowrap transition-colors border border-white/10">
-                ✉️ Contact
+            <button onclick="sendQuickPrompt('Aide-moi à créer une idée de projet web !')" class="px-3 py-1.5 rounded-full glass hover:bg-brand-500/20 text-gray-200 whitespace-nowrap transition-colors border border-white/10">
+                💡 Idées Projets
             </button>
         </div>
 
-        <!-- Chat Messages Scroll Area -->
+        <!-- Chat Area -->
         <div id="chat-messages" class="flex-1 p-4 overflow-y-auto space-y-4 chat-scroll text-sm">
-            <!-- Welcome AI Message -->
             <div class="flex items-start gap-3">
                 <div class="w-8 h-8 rounded-lg bg-brand-600/40 border border-brand-500/30 flex items-center justify-center text-brand-300 text-xs shrink-0 mt-1">
                     <i class="fa-solid fa-robot"></i>
                 </div>
-                <div class="bg-white/5 border border-white/10 p-3.5 rounded-2xl rounded-tl-sm text-gray-200 leading-relaxed max-w-[85%]">
-                    Salut ! 👋 Je suis l'assistant IA du site. Pose-moi n'importe quelle question sur <strong>Max</strong>, <strong>Christ</strong>, <strong>Chams</strong> ou sur les projets !
+                <div class="bg-white/5 border border-white/10 p-3.5 rounded-2xl rounded-tl-sm text-gray-200 leading-relaxed max-w-[88%]">
+                    Salut ! 👋 Je suis l'assistant officiel du site. Tu peux me poser des questions sur <strong>Max</strong>, <strong>Christ</strong>, <strong>Chams</strong>, ou me demander du code et des conseils !
                 </div>
             </div>
         </div>
 
-        <!-- Typing Indicator (Hidden by default) -->
-        <div id="typing-indicator" class="px-4 py-2 text-xs text-gray-400 flex items-center gap-2 hidden">
+        <!-- Typing Indicator -->
+        <div id="typing-indicator" class="px-4 py-2 text-xs text-brand-300 flex items-center gap-2 hidden">
             <i class="fa-solid fa-circle-notch animate-spin text-brand-400"></i>
-            <span>L'IA réfléchit...</span>
+            <span>L'IA prépare sa réponse...</span>
         </div>
 
-        <!-- API Key Input Modal overlay inside Chat drawer -->
-        <div id="api-key-modal" class="absolute inset-0 bg-slate-950/90 backdrop-blur-md p-6 flex flex-col justify-center items-center text-center z-20 hidden">
+        <!-- Modal Clé API intégrée -->
+        <div id="api-key-modal" class="absolute inset-0 bg-slate-950/95 backdrop-blur-md p-6 flex flex-col justify-center items-center text-center z-20 hidden">
             <div class="w-12 h-12 rounded-2xl bg-brand-500/20 border border-brand-500/40 text-brand-400 flex items-center justify-center text-xl mb-4">
                 <i class="fa-solid fa-key"></i>
             </div>
             <h4 class="font-heading font-bold text-lg mb-2">Clé API Google Gemini</h4>
             <p class="text-xs text-gray-400 mb-4 max-w-xs">
-                Optionnel : ajoute ta propre clé API Gemini pour connecter directement le modèle en temps réel.
+                Ajoute ta clé API Gemini pour connecter le vrai modèle IA puissant en direct !
             </p>
-            <input id="gemini-api-key" type="password" placeholder="AIzaSy..." class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white mb-4 focus:outline-none focus:border-brand-500">
+            <input id="gemini-api-key" type="password" placeholder="Colle ta clé API Gemini ici..." class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white mb-4 focus:outline-none focus:border-brand-500">
             <div class="flex gap-2 w-full">
                 <button onclick="saveApiKey()" class="flex-1 bg-brand-600 hover:bg-brand-500 text-white font-semibold py-2 rounded-xl text-xs transition-colors">
-                    Enregistrer
+                    Activer Gemini
                 </button>
                 <button onclick="toggleApiKeyModal()" class="px-4 glass text-gray-300 py-2 rounded-xl text-xs hover:bg-white/10">
                     Fermer
@@ -372,10 +372,10 @@
             </div>
         </div>
 
-        <!-- Chat Input Form -->
-        <div class="p-3 bg-slate-950/60 border-t border-white/10 backdrop-blur-md">
+        <!-- Formulaire de saisie -->
+        <div class="p-3 bg-slate-950/80 border-t border-white/10 backdrop-blur-md">
             <form id="chat-form" onsubmit="handleChatSubmit(event)" class="flex items-center gap-2">
-                <input id="chat-input" type="text" placeholder="Écris ton message ici..." autocomplete="off" class="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand-500/60 transition-colors">
+                <input id="chat-input" type="text" placeholder="Pose une question à l'IA..." autocomplete="off" class="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand-500 transition-colors">
                 <button type="submit" class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-brand-accent hover:opacity-90 text-white flex items-center justify-center text-sm transition-all shadow-md shrink-0">
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
@@ -383,38 +383,53 @@
         </div>
     </div>
 
-    <!-- AI Chatbot Logic -->
+    <!-- Scripts pour l'effet Typewriter + Logique IA Améliorée -->
     <script>
+        // Effect Typewriter
+        const words = ["l'Équipe de Max", "Christ & Chams", "le Futur du Web", "l'Intelligence Artificielle"];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typewriterEl = document.getElementById('typewriter');
+
+        function typeEffect() {
+            const currentWord = words[wordIndex];
+            if (isDeleting) {
+                typewriterEl.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typewriterEl.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIndex === currentWord.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(typeEffect, typeSpeed);
+        }
+        document.addEventListener('DOMContentLoaded', typeEffect);
+
+        // LOGIQUE IA GEMINI INTELLECTUELLE & FLUIDE
         let isChatOpen = false;
         let userApiKey = localStorage.getItem('GEMINI_API_KEY') || '';
 
-        // Pre-loaded Knowledge Base for Offline/Fast Assistant
-        const knowledgeBase = [
-            {
-                keywords: ['qui', 'team', 'équipe', 'membres', 'frérots', 'présentation'],
-                response: "L'équipe est composée de 3 frérots complémentaires :\n• **Max** : Lead Developer & Créateur du site\n• **Christ** : Tech & Stratégie\n• **Chams** : UX Master & Design Créatif !"
-            },
-            {
-                keywords: ['max'],
-                response: "**Max** est le Lead Developpeur. C'est lui qui a bâti la structure du site, configuré les animations et intégré l'intelligence artificielle Gemini !"
-            },
-            {
-                keywords: ['christ'],
-                response: "**Christ** s'occupe de la partie Tech, de l'optimisation serveur, de la logique backend et de la vision stratégique des projets !"
-            },
-            {
-                keywords: ['chams'],
-                response: "**Chams** est le génie créatif et UI/UX designer. Il s'assure que tout le design soit ultra fluide, stylé et agréable à naviguer."
-            },
-            {
-                keywords: ['contact', 'joindre', 'mail', 'ecrire', 'message'],
-                response: "Tu peux contacter la team directement en envoyant un message via le bouton contact ou en venant discuter avec Max sur ses réseaux !"
-            },
-            {
-                keywords: ['ia', 'ai', 'gemini', 'bot', 'intelligence'],
-                response: "Je suis un assistant basé sur les modèles **Google Gemini AI**. Je peux répondre à tes questions sur l'équipe, t'aider à naviguer ou discuter !"
-            }
-        ];
+        // Système de connaissances riche et intelligent
+        const smartKnowledgeBase = {
+            team: "L'équipe est dirigée par un trio complémentaire :\n\n• **Max** : Lead Developer & Créateur du site. Il gère l'architecture web, le code frontend et l'intégration Gemini IA.\n• **Christ** : Tech & Stratégie Backend. Il s'occupe de la performance, de la structure des données et des projets stratégiques.\n• **Chams** : Designer UX/UI & Lead Créatif. C'est lui qui apporte la touche esthétique moderne et l'ergonomie !",
+            max: "**Max** est le Lead Developpeur et l'initiateur de ce site ! Il maîtrise le développement frontend, les animations modernes, et l'intégration des APIs d'intelligence artificielle comme Gemini.",
+            christ: "**Christ** est l'expert Tech & Stratégie. Il se concentre sur l'optimisation des performances backend, l'architecture réseau et la gestion des projets.",
+            chams: "**Chams** est le designer UI/UX de l'équipe. Il conçoit des interfaces élégantes avec des effets Glassmorphism, une typographie soignée et une expérience utilisateur parfaite.",
+            ia: "Je tourne sous le modèle **Google Gemini 2.5 Flash**, paramétré spécifiquement pour répondre à tout sujet concernant l'équipe de Max, le développement web, le design ou l'IA !",
+            project: "La team travaille sur la création de sites web modernes, l'intégration d'IA personnalisées, d'animations fluides et d'interfaces futuristes !"
+        };
 
         function toggleAiChat() {
             const drawer = document.getElementById('ai-chat-drawer');
@@ -443,7 +458,7 @@
             userApiKey = inputVal;
             localStorage.setItem('GEMINI_API_KEY', inputVal);
             toggleApiKeyModal();
-            appendMessage('system', '✅ Clé API enregistrée ! Vos requêtes passeront directement par l\'API Google Gemini.');
+            appendMessage('system', '⚡ Clé API Gemini enregistrée avec succès ! Le modèle en direct est activé.');
         }
 
         function sendQuickPrompt(promptText) {
@@ -457,57 +472,48 @@
             const message = inputEl.value.trim();
             if (!message) return;
 
-            // Clear input
             inputEl.value = '';
-
-            // Add User Message
             appendMessage('user', message);
-
-            // Show typing indicator
             showTyping(true);
 
-            // Fetch AI Response
             try {
                 let aiResponse = "";
-
                 if (userApiKey) {
-                    // Real Gemini API Call
                     aiResponse = await fetchGeminiApiResponse(message);
                 } else {
-                    // Simulated Smart Local NLP Response
-                    await new Promise(r => setTimeout(r, 600));
-                    aiResponse = getLocalResponse(message);
+                    await new Promise(r => setTimeout(r, 500));
+                    aiResponse = generateLocalSmartResponse(message);
                 }
-
                 showTyping(false);
                 appendMessage('ai', aiResponse);
             } catch (err) {
                 showTyping(false);
-                appendMessage('ai', "Oups ! Une petite erreur s'est produite. " + err.message);
+                appendMessage('ai', "Problème de connexion à l'API Gemini. " + err.message);
             }
         }
 
-        function getLocalResponse(query) {
-            const lower = query.toLowerCase();
-            for (const item of knowledgeBase) {
-                if (item.keywords.some(kw => lower.includes(kw))) {
-                    return item.response;
-                }
-            }
-            return "Merci pour ton message ! Je suis l'IA de l'équipe Max, Christ & Chams. Que souhaites-tu savoir sur nos créations ou nos compétences ?";
+        function generateLocalSmartResponse(query) {
+            const q = query.toLowerCase();
+
+            if (q.includes('max') && (q.includes('qui') || q.includes('fait') || q.includes('rôle'))) return smartKnowledgeBase.max;
+            if (q.includes('christ')) return smartKnowledgeBase.christ;
+            if (q.includes('chams')) return smartKnowledgeBase.chams;
+            if (q.includes('équipe') || q.includes('team') || q.includes('membres') || q.includes('qui sont')) return smartKnowledgeBase.team;
+            if (q.includes('ia') || q.includes('gemini') || q.includes('robot') || q.includes('assistant')) return smartKnowledgeBase.ia;
+            if (q.includes('projet') || q.includes('travail') || q.includes('faites')) return smartKnowledgeBase.project;
+
+            return "Je suis l'assistant IA de la team ! Tu peux me poser des questions précises sur **Max**, **Christ**, **Chams**, ou même me demander un conseil de code. Pour débloquer la puissance totale de l'IA en temps réel, clique sur l'icône de clé 🔑 en haut du chat pour coller ta clé API Gemini !";
         }
 
         async function fetchGeminiApiResponse(prompt) {
             const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${userApiKey}`;
-            const systemPrompt = "Tu es l'assistant virtuel officiel du site web de l'équipe composée de Max (Lead Dev), Christ (Tech & Stratégie) et Chams (UI/UX Designer). Sois amical, moderne, dynamique, parle en français avec un ton cool et professionnel.";
+            const systemPrompt = "Tu es l'assistant IA intelligent et ultra rapide du site officiel de Max (Lead Dev), Christ (Backend & Stratégie) et Chams (Designer UI/UX). Sois très précis, structuré, poli, amical et utilise un ton dynamique et pro.";
 
             const bodyData = {
-                contents: [
-                    {
-                        role: "user",
-                        parts: [{ text: `${systemPrompt}\n\nQuestion de l'utilisateur: ${prompt}` }]
-                    }
-                ]
+                contents: [{
+                    role: "user",
+                    parts: [{ text: `${systemPrompt}\n\nQuestion de l'utilisateur: ${prompt}` }]
+                }]
             };
 
             const res = await fetch(url, {
@@ -516,18 +522,15 @@
                 body: JSON.stringify(bodyData)
             });
 
-            if (!res.ok) {
-                throw new Error("Vérifie ta clé API Gemini.");
-            }
-
+            if (!res.ok) throw new Error("Clé API invalide ou quota dépassé.");
             const data = await res.json();
-            return data.candidates?.[0]?.content?.parts?.[0]?.text || "Je n'ai pas pu générer de réponse.";
+            return data.candidates?.[0]?.content?.parts?.[0]?.text || "Désolé, aucune réponse générée.";
         }
 
         function appendMessage(sender, text) {
             const container = document.getElementById('chat-messages');
             const msgDiv = document.createElement('div');
-            msgDiv.className = 'flex items-start gap-3 animate-fadeIn';
+            msgDiv.className = 'flex items-start gap-3';
 
             if (sender === 'user') {
                 msgDiv.innerHTML = `

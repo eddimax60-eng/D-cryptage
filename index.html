@@ -3,162 +3,335 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Serveur iSH de Max</title>
+  <title>Serveur iSH de Max - Team Zone</title>
+  <!-- Google Font Modern -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      background-color: #000000;
-      color: #ffffff;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      text-align: center;
-      padding: 30px 15px;
-      transition: background-color 0.5s ease, color 0.5s ease;
+    * {
+      box-sizing: border-box;
       margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #090a0f;
+      color: #ffffff;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      padding: 20px 15px;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      transition: background 0.8s ease;
+      overflow-x: hidden;
+    }
+
+    /* Carte Glassmorphism Principale */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 30px 20px;
+      max-width: 650px;
+      width: 100%;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+      margin-top: 20px;
+      animation: fadeIn 0.8s ease-out;
     }
 
     h1 {
-      color: #0088ff;
-      text-decoration: underline;
+      background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       font-size: 2.2em;
-      margin-bottom: 10px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      text-decoration: none;
+    }
+
+    .title-underline {
+      height: 4px;
+      width: 80px;
+      background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+      margin: 0 auto 20px auto;
+      border-radius: 2px;
     }
 
     .intro {
-      font-size: 1.1em;
-      margin-bottom: 30px;
-    }
-
-    .question {
-      font-size: 1.3em;
-      font-weight: bold;
-      margin-bottom: 15px;
-    }
-
-    .btn-container {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
+      font-size: 1em;
+      color: #a0a5b5;
+      line-height: 1.6;
       margin-bottom: 25px;
     }
 
-    .btn-yes {
-      background-color: #28a745;
-      color: white;
+    .question {
+      font-size: 1.2em;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    /* Boutons interactifs */
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .btn {
       border: none;
-      padding: 12px 28px;
-      font-size: 1.1em;
-      font-weight: bold;
-      border-radius: 8px;
+      padding: 14px 32px;
+      font-size: 1em;
+      font-weight: 600;
+      border-radius: 12px;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .btn-yes {
+      background: linear-gradient(135deg, #11998e, #38ef7d);
+      color: #ffffff;
     }
 
     .btn-no {
-      background-color: #dc3545;
-      color: white;
-      border: none;
-      padding: 12px 28px;
-      font-size: 1.1em;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      background: linear-gradient(135deg, #eb3349, #f45c43);
+      color: #ffffff;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.5);
+    }
+
+    .btn:active {
+      transform: translateY(1px) scale(0.98);
     }
 
     .btn-feliciter {
-      background-color: #f39c12;
+      background: linear-gradient(135deg, #f857a6, #ff5858);
       color: white;
-      border: none;
-      padding: 12px 24px;
-      font-size: 1.1em;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      margin-top: 20px;
     }
 
+    /* Images */
     .img-display {
-      max-width: 90%;
-      width: 320px;
-      border-radius: 12px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.6);
-      margin-top: 15px;
+      max-width: 100%;
+      width: 280px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      margin: 15px 0;
+      border: 1px solid rgba(255,255,255,0.15);
+      animation: zoomIn 0.5s ease;
     }
 
-    .long-text {
+    /* Carte Dédicace Chams & Christ */
+    .dedicace-card {
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 210, 255, 0.3);
+      border-radius: 16px;
+      padding: 20px 15px;
+      margin: 25px 0 15px 0;
+      box-shadow: 0 8px 25px rgba(0, 210, 255, 0.15);
+      animation: fadeInUp 0.6s ease;
+    }
+
+    .dedicace-title {
+      font-size: 1.1em;
+      font-weight: 700;
+      color: #00d2ff;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .friends-grid {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .friend-box {
       background: rgba(0, 0, 0, 0.3);
+      border-radius: 12px;
+      padding: 10px;
+      width: 140px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .friend-box:hover {
+      transform: translateY(-5px);
+    }
+
+    .friend-box img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+
+    .friend-name {
+      font-size: 0.9em;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    /* Effet Machine à écrire */
+    .typewriter-box {
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 12px;
       padding: 20px;
-      border-radius: 10px;
-      margin: 20px auto 0 auto;
-      max-width: 600px;
+      margin-top: 20px;
       text-align: left;
-      line-height: 1.6;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 0.95em;
+      line-height: 1.7;
+      color: #d1d5db;
+      border-left: 4px solid #38ef7d;
+      min-height: 120px;
+    }
+
+    /* Animations KEYFRAMES */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes zoomIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-10px); }
+      40%, 80% { transform: translateX(10px); }
+    }
+
+    .shake-anim {
+      animation: shake 0.5s ease-in-out;
     }
   </style>
 </head>
 <body>
 
-  <h1>Bonjour l'équipe</h1>
-  
-  <p class="intro">
-    Je suis vraiment super content de vous accueillir sur mon site web ! <br>
-    Installez-vous bien, je vais vous faire une petite visite guidée.
-  </p>
+  <div class="glass-card" id="mainCard">
+    <h1>Bonjour l'équipe</h1>
+    <div class="title-underline"></div>
+    
+    <p class="intro">
+      Je suis vraiment super content de vous accueillir sur mon site web ! <br>
+      Installez-vous bien, je vais vous faire une petite visite guidée.
+    </p>
 
-  <p class="question">Est-ce que vous faites partie de la team ?</p>
+    <!-- Carte Spéciale Dédicace aux Potes -->
+    <div class="dedicace-card">
+      <div class="dedicace-title">🔥 Spécial dédicace à Chams et Christ 😎 🔥</div>
+      <p style="font-size: 0.85em; color: #a0a5b5; margin-bottom: 12px;">Mes meilleurs potes, mes frérots !</p>
+      <div class="friends-grid">
+        <div class="friend-box">
+          <img src="https://i.ibb.co/TB5PhZWs/IMG-9824.jpg" alt="Christ">
+          <div class="friend-name">Christ</div>
+        </div>
+        <div class="friend-box">
+          <img src="https://i.ibb.co/yn74KLxb/cc7eb9b4-4d8d-417e-9d7f-ba8ba7aba678.jpg" alt="Chams">
+          <div class="friend-name">Chams</div>
+        </div>
+      </div>
+    </div>
 
-  <div class="btn-container">
-    <button class="btn-yes" onclick="reponseOui()">Oui</button>
-    <button class="btn-no" onclick="reponseNon()">Non</button>
+    <p class="question">Est-ce que vous faites partie de la team ?</p>
+
+    <div class="btn-container">
+      <button class="btn btn-yes" onclick="reponseOui()">Oui</button>
+      <button class="btn btn-no" onclick="reponseNon()">Non</button>
+    </div>
+
+    <div id="zone-reponse"></div>
   </div>
-
-  <div id="zone-reponse"></div>
 
   <script>
     function reponseOui() {
-      // Arrière-plan vert foncé
-      document.body.style.backgroundColor = "#0b3b17";
-      document.body.style.color = "#e2f7e5";
+      // Transition fond vert sombre hyper classe
+      document.body.style.background = "radial-gradient(circle at center, #0e3a1e 0%, #05140a 100%)";
 
       document.getElementById('zone-reponse').innerHTML = `
-        <br>
-        <img src="https://i.ibb.co/yBSjMCkd/IMG-9847.jpg" alt="Photo Team" class="img-display">
-        <br>
-        <button class="btn-feliciter" onclick="afficherFelicitations()">Félicitations</button>
-        <div id="zone-texte"></div>
+        <div style="animation: fadeIn 0.6s ease;">
+          <img src="https://i.ibb.co/yBSjMCkd/IMG-9847.jpg" alt="Photo Max Team" class="img-display">
+          <br>
+          <button class="btn btn-feliciter" onclick="demarrerMachineAEcrire()">Félicitations 🎉</button>
+          <div id="zone-texte"></div>
+        </div>
       `;
     }
 
     function reponseNon() {
-      // Arrière-plan rouge foncé
-      document.body.style.backgroundColor = "#4a0d0d";
-      document.body.style.color = "#fde8e8";
+      // Transition fond rouge sombre
+      document.body.style.background = "radial-gradient(circle at center, #4a0d0d 0%, #170303 100%)";
+      
+      // Animation tremblement de la carte
+      const card = id = document.getElementById('mainCard');
+      card.classList.add('shake-anim');
+      setTimeout(() => card.classList.remove('shake-anim'), 500);
 
       document.getElementById('zone-reponse').innerHTML = `
-        <br>
-        <img src="https://i.ibb.co/ZR4J4WZq/IMG-9564.jpg" alt="Photo Non Team" class="img-display">
-        <p style="margin-top: 15px; font-weight: bold; font-size: 1.2em;">Dommage ! Seule la vraie team a accès aux privilèges secrets du site.</p>
+        <div style="animation: fadeIn 0.6s ease;">
+          <img src="https://i.ibb.co/ZR4J4WZq/IMG-9564.jpg" alt="Photo Non Team" class="img-display">
+          <p style="margin-top: 15px; font-weight: 600; color: #ff6b6b;">
+            Dommage ! Seule la vraie team a accès aux privilèges secrets du site. 😉
+          </p>
+        </div>
       `;
     }
 
-    function afficherFelicitations() {
-      document.getElementById('zone-texte').innerHTML = `
-        <div class="long-text">
-          <p><strong>Un énorme bravo à toi !</strong></p>
-          <p>Si tu es arrivé jusqu'ici, c'est que tu fais officiellement partie du cercle très fermé de l'équipe.</p>
-          <p>C'est un réel plaisir d'avoir des personnes comme vous à mes côtés pour partager cette aventure.</p>
-          <p>Ensemble, on avance plus vite, on va plus loin et on réalise des projets de plus en plus lourds.</p>
-          <p>Ce site n'est que le tout premier pas d'une très longue série de surprises et de nouveautés.</p>
-          <p>Prenez le temps d'explorer, profitez de chaque instant et gardez toujours cette force collective.</p>
-          <p>Chaque membre apporte sa touche unique et c'est exactement ce qui fait la solidité du groupe.</p>
-          <p>Merci pour votre loyauté, votre soutien, votre présence quotidienne et votre motivation.</p>
-          <p>Restez connectés car d'autres fonctionnalités encore plus puissantes arrivent très bientôt.</p>
-          <p>Continuez de donner le meilleur de vous-mêmes comme vous le faites toujours.</p>
-          <p>Force à toute l'équipe, on est ensemble jusqu'au sommet ! 🔥</p>
-        </div>
-      `;
+    const texteLong = `Un énorme bravo à toi ! 🚀
+Si tu es arrivé jusqu'ici, c'est que tu fais officiellement partie du cercle très fermé de l'équipe.
+C'est un réel plaisir d'avoir des personnes comme vous à mes côtés pour partager cette aventure.
+Ensemble, on avance plus vite, on va plus loin et on réalise des projets de plus en plus lourds.
+Ce site n'est que le tout premier pas d'une très longue série de surprises et de nouveautés.
+Prenez le temps d'explorer, profitez de chaque instant et gardez toujours cette force collective.
+Chaque membre apporte sa touche unique et c'est exactement ce qui fait la solidité du groupe.
+Merci pour votre loyauté, votre soutien, votre présence quotidienne et votre motivation.
+Restez connectés car d'autres fonctionnalités encore plus puissantes arrivent très bientôt.
+Continuez de donner le meilleur de vous-mêmes comme vous le faites toujours.
+Force à toute l'équipe, on est ensemble jusqu'au sommet ! 🔥`;
+
+    function demarrerMachineAEcrire() {
+      const target = document.getElementById('zone-texte');
+      target.innerHTML = `<div class="typewriter-box" id="textTarget"></div>`;
+      
+      const box = document.getElementById('textTarget');
+      let i = 0;
+      box.innerHTML = "";
+
+      function taper() {
+        if (i < texteLong.length) {
+          if (texteLong.charAt(i) === '\n') {
+            box.innerHTML += '<br>';
+          } else {
+            box.innerHTML += texteLong.charAt(i);
+          }
+          i++;
+          setTimeout(taper, 25); // Vitesse d'écriture (en millisecondes)
+        }
+      }
+
+      taper();
     }
   </script>
 

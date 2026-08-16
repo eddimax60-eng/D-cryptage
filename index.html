@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KAWAZ</title>
   
-  <!-- Supabase JS -->
+  <!-- Supabase JS CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -236,19 +236,21 @@
   </div>
 
   <script>
-    // Configuration Supabase avec tes identifiants
+    // Configuration Supabase
     const SUPABASE_URL = 'https://tpnnrezecriolvmgu.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_n667t4HuOITrCXiO2cjeTA_QjrlM5uD';
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    
+    // Initialisation du client Supabase via la variable globale
+    const _supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     let mediaRecorder;
     let audioChunks = [];
     let isRecording = false;
 
-    // Chargement initial et temps réel des messages
+    // Chargement initial et écoute des messages en temps réel
     window.onload = () => {
       loadMessages();
-      supabase.channel('public:messages')
+      _supabase.channel('public:messages')
         .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, payload => {
           renderMessage(payload.new);
         })
@@ -263,7 +265,7 @@
 
     // Charger les messages depuis Supabase
     async function loadMessages() {
-      const { data, error } = await supabase
+      const { data, error } = await _supabase
         .from('messages')
         .select('*')
         .order('created_at', { ascending: true });
@@ -296,34 +298,37 @@
       if (!text) return;
 
       input.value = '';
-      await supabase.from('messages').insert([{ author: 'Max', content: text }]);
+      await _supabase.from('messages').insert([{ author: 'Max', content: text }]);
     }
 
-    // Gestion de l'enregistrement vocal
+    // Enregistrement vocal
     async function toggleRecord() {
       const recBtn = document.getElementById('rec-btn');
       
       if (!isRecording) {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        mediaRecorder = new MediaRecorder(stream);
-        audioChunks = [];
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          mediaRecorder = new MediaRecorder(stream);
+          audioChunks = [];
 
-        mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
-        mediaRecorder.onstop = async () => {
-          const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-          const fileName = `vocal_${Date.now()}.webm`;
+          mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+          mediaRecorder.onstop = async () => {
+            const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+            const fileName = `vocal_${Date.now()}.webm`;
 
-          // Upload dans le bucket 'vocaux'
-          const { error: uploadErr } = await supabase.storage.from('vocaux').upload(fileName, audioBlob);
-          if (uploadErr) return alert('Erreur upload vocal');
+            const { error: uploadErr } = await _supabase.storage.from('vocaux').upload(fileName, audioBlob);
+            if (uploadErr) return alert('Erreur d\'envoi vocal');
 
-          const { data: urlData } = supabase.storage.from('vocaux').getPublicUrl(fileName);
-          await supabase.from('messages').insert([{ author: 'Max', audio_url: urlData.publicUrl }]);
-        };
+            const { data: urlData } = _supabase.storage.from('vocaux').getPublicUrl(fileName);
+            await _supabase.from('messages').insert([{ author: 'Max', audio_url: urlData.publicUrl }]);
+          };
 
-        mediaRecorder.start();
-        isRecording = true;
-        recBtn.innerText = '⏹️';
+          mediaRecorder.start();
+          isRecording = true;
+          recBtn.innerText = '⏹️';
+        } catch (err) {
+          alert('Accès au micro refusé ou indisponible');
+        }
       } else {
         mediaRecorder.stop();
         isRecording = false;
